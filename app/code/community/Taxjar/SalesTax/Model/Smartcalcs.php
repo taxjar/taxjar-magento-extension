@@ -210,14 +210,19 @@ class Taxjar_SalesTax_Model_Smartcalcs
         if (count($items) > 0) {
             foreach ($items as $item) {
                 $id = $item->getId();
+                $name = $item->getProduct()->getName();
+                $sku = $item->getSku();
                 $quantity = $item->getQty();
                 $taxClass = Mage::getModel('tax/class')->load($item->getProduct()->getTaxClassId());
                 $taxCode = $taxClass->getTjSalestaxCode();
                 $unitPrice = (float) $item->getPrice();
                 $discount = (float) $item->getDiscountAmount();
-
                 if ($item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE) {
+                    $parentQuantity[$id] = $quantity;
                     continue;
+                }
+                else {
+                    $parentId = $item->getParentItemId();
                 }
 
                 if (Mage::getEdition() == 'Enterprise') {
@@ -233,7 +238,9 @@ class Taxjar_SalesTax_Model_Smartcalcs
                         }
                     }
                 }
-
+                if($parentId) {
+                    $quantity = $parentQuantity[$parentId] * $quantity;
+                }
                 if ($unitPrice) {
                     array_push($lineItems, array(
                         'id' => $id,
@@ -241,7 +248,8 @@ class Taxjar_SalesTax_Model_Smartcalcs
                         'product_tax_code' => $taxCode,
                         'unit_price' => $unitPrice,
                         'discount' => $discount,
-                    ));    
+                    ));
+                    $pid = [];
                 }
             }
         }
