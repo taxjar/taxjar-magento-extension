@@ -221,7 +221,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
                     $parentQuantity[$id] = $quantity;
                     continue;
                 }
-                else{
+                else {
                     $parentId = $item->getParentItemId();
                 }
 
@@ -238,10 +238,9 @@ class Taxjar_SalesTax_Model_Smartcalcs
                         }
                     }
                 }
-                if($parentId){
+                if($parentId) {
                     $quantity = $parentQuantity[$parentId] * $quantity;
                 }
-//  Mage::log("Quantity: ".$quantity." Item-id: ".$id. " Name: ".$name. " SKU: ".$sku. " P-ID: ".$parentId. " SizeofParry: ".$count, null, taxjar.log);
                 if ($unitPrice) {
                     array_push($lineItems, array(
                         'id' => $id,
