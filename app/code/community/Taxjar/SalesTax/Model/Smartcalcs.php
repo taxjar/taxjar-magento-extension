@@ -222,8 +222,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
                     continue;
                 }
                 else{
-                    $pid = $item->getParentItemId();
-                    $parentId = $pid; 
+                    $parentId = $item->getParentItemId();
                 }
 
                 if (Mage::getEdition() == 'Enterprise') {
@@ -240,8 +239,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
                     }
                 }
                 if($parentId){
-                    $oldQuantity = $quantity;
-                    $quantity = $parentQuantity[$parentId] * $oldQuantity;
+                    $quantity = $parentQuantity[$parentId] * $quantity;
                 }
 //  Mage::log("Quantity: ".$quantity." Item-id: ".$id. " Name: ".$name. " SKU: ".$sku. " P-ID: ".$parentId. " SizeofParry: ".$count, null, taxjar.log);
                 if ($unitPrice) {
