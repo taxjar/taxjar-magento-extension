@@ -249,7 +249,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
                         'unit_price' => $unitPrice,
                         'discount' => $discount,
                     ));
-                    $pid = [];
+                    $parentId = ;
                 }
             }
         }
