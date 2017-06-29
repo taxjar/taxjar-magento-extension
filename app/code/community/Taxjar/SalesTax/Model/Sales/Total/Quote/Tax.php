@@ -58,10 +58,12 @@ class Taxjar_SalesTax_Model_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_T
             $address->setBaseShippingTaxAmount($shippingTaxAmount);
 
             if (count($items) > 0) {
+                $fptEnabled = $this->_getTaxConfig('weee/enable', $store->getId());
+
                 foreach ($items as $item) {
                     $itemTax = $smartCalcs->getResponseLineItem($item->getId());
 
-                    if ($this->_getTaxConfig('weee/enable', $store->getId())) {
+                    if ($fptEnabled) {
                         $fptAmount = $item->getWeeeTaxAppliedAmount() * $item->getQty();
                         $this->_addAmount($store->convertPrice($fptAmount));
                         $this->_addBaseAmount($fptAmount);
