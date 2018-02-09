@@ -25,16 +25,17 @@ class Taxjar_SalesTax_Model_Smartcalcs
 
     public function __construct($params = array())
     {
-        $this->initTaxForOrder($params['address']);
+        $this->initTaxForOrder($params['address'], $params['address_items']);
     }
 
     /**
      * Tax calculation for order
      *
      * @param  object $address
+     * @param  array $items
      * @return void
      */
-    public function initTaxForOrder($address)
+    public function initTaxForOrder($address, $items)
     {
         $storeId = $address->getQuote()->getStore()->getId();
         $apiKey = preg_replace('/\s+/', '', Mage::getStoreConfig('tax/taxjar/apikey'));
@@ -51,7 +52,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
             return;
         }
 
-        if (!count($address->getAllItems())) {
+        if (!count($items)) {
             return;
         }
 
@@ -77,7 +78,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
 
         $order = array_merge($fromAddress, $toAddress, array(
             'shipping' => (float) $address->getShippingAmount(),
-            'line_items' => $this->_getLineItems($address),
+            'line_items' => $this->_getLineItems($items),
             'nexus_addresses' => $this->_getNexusAddresses(),
             'plugin' => 'magento'
         ));
@@ -199,19 +200,17 @@ class Taxjar_SalesTax_Model_Smartcalcs
     /**
      * Get order line items
      *
-     * @param  array $address
+     * @param  array $items
      * @return array
      */
-    private function _getLineItems($address)
+    private function _getLineItems($items)
     {
         $lineItems = array();
-        $items = $address->getAllItems();
 
         if (count($items) > 0) {
             $parentQuantities = array();
 
-            foreach ($items as $item) {
-                $id = $item->getId();
+            foreach ($items as $itemIndex => $item) {
                 $parentId = $item->getParentItemId();
                 $quantity = $item->getQty();
                 $unitPrice = (float) $item->getPrice();
@@ -253,7 +252,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
 
                 if ($unitPrice) {
                     array_push($lineItems, array(
-                        'id' => $id,
+                        'id' => $itemIndex,
                         'quantity' => $quantity,
                         'product_tax_code' => $taxCode,
                         'unit_price' => $unitPrice,

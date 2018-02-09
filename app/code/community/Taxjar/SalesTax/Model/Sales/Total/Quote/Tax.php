@@ -37,12 +37,12 @@ class Taxjar_SalesTax_Model_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_T
         $address->setShippingTaxAmount(0);
         $address->setBaseShippingTaxAmount(0);
 
-        $smartCalcs = $this->_getSmartCalcs($address);
+        $items = $this->_getAddressItems($address);
+        $smartCalcs = $this->_getSmartCalcs($address, $items);
         $smartCalcsResponse = $smartCalcs->getResponse();
 
         if (isset($smartCalcsResponse['body']['tax']) && $smartCalcsResponse['status'] == 200) {
             $store = $address->getQuote()->getStore();
-            $items = $this->_getAddressItems($address);
             $rates = $smartCalcsResponse['body']['tax'];
 
             if (isset($rates['breakdown']['shipping']['tax_collectable'])) {
@@ -58,8 +58,8 @@ class Taxjar_SalesTax_Model_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_T
             $address->setBaseShippingTaxAmount($shippingTaxAmount);
 
             if (count($items) > 0) {
-                foreach ($items as $item) {
-                    $itemTax = $smartCalcs->getResponseLineItem($item->getId());
+                foreach ($items as $itemIndex => $item) {
+                    $itemTax = $smartCalcs->getResponseLineItem($itemIndex);
 
                     if (isset($itemTax)) {
                         $this->_addAmount($store->convertPrice($itemTax['tax_collectable']));
@@ -81,13 +81,14 @@ class Taxjar_SalesTax_Model_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_T
      * Get SmartCalcs model
      *
      * @param   Mage_Sales_Model_Quote_Address $address
+     * @param   array $addressItems
      * @return  Taxjar_SalesTax_Model_SmartCalcs
      */
-    protected function _getSmartCalcs(Mage_Sales_Model_Quote_Address $address)
+    protected function _getSmartCalcs(Mage_Sales_Model_Quote_Address $address, $addressItems)
     {
         return Mage::getModel(
             'taxjar/smartcalcs',
-            array('address' => $address)
+            array('address' => $address, 'address_items' => $addressItems)
         );
     }
 }
