@@ -71,24 +71,6 @@
             </salestax_setup>
         </resources>
         <events>
-            <admin_system_config_changed_section_tax>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_configChanged</class>
-                        <method>execute</method>
-                    </taxjar>
-                </observers>
-            </admin_system_config_changed_section_tax>
-            <controller_action_predispatch_adminhtml_system_config_edit>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_configReview</class>
-                        <method>execute</method>
-                    </taxjar>
-                </observers>
-            </controller_action_predispatch_adminhtml_system_config_edit>
             <taxjar_salestax_import_categories>
                 <observers>
                     <taxjar>
@@ -125,15 +107,10 @@
                     </taxjar>
                 </observers>
             </sales_quote_collect_totals_before>
-            <controller_action_predispatch>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_adminNotifications</class>
-                        <method>execute</method>
-                    </taxjar>
-                </observers>
-            </controller_action_predispatch>
+        </events>
+    </global>
+    <adminhtml>
+        <events>
             <controller_action_layout_render_before>
                 <observers>
                     <taxjar>
@@ -143,8 +120,35 @@
                     </taxjar>
                 </observers>
             </controller_action_layout_render_before>
+            <controller_action_predispatch>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_adminNotifications</class>
+                        <method>execute</method>
+                    </taxjar>
+                </observers>
+            </controller_action_predispatch>
+            <controller_action_predispatch_adminhtml_system_config_edit>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_configReview</class>
+                        <method>execute</method>
+                    </taxjar>
+                </observers>
+            </controller_action_predispatch_adminhtml_system_config_edit>
+            <admin_system_config_changed_section_tax>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_configChanged</class>
+                        <method>execute</method>
+                    </taxjar>
+                </observers>
+            </admin_system_config_changed_section_tax>
         </events>
-    </global>
+    </adminhtml>
     <admin>
         <routers>
             <adminhtml>
@@ -169,11 +173,11 @@
         </jobs>
     </crontab>
     <default>
-		<tax>
-			<taxjar>
-				<product_tax_classes>2</product_tax_classes>
-				<customer_tax_classes>3</customer_tax_classes>
-			</taxjar>
-		</tax>
+        <tax>
+            <taxjar>
+                <product_tax_classes>2</product_tax_classes>
+                <customer_tax_classes>3</customer_tax_classes>
+            </taxjar>
+        </tax>
     </default>
 </config>
