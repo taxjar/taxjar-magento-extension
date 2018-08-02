@@ -19,7 +19,7 @@
 <config>
     <modules>
         <Taxjar_SalesTax>
-            <version>2.3.7</version>
+            <version>2.4.0</version>
         </Taxjar_SalesTax>
     </modules>
     <global>
@@ -143,6 +143,15 @@
                     </taxjar>
                 </observers>
             </controller_action_layout_render_before>
+            <controller_action_predispatch_adminhtml_tax_class_save>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_classTaxChanged</class>
+                        <method>execute</method>
+                    </taxjar>
+                </observers>
+            </controller_action_predispatch_adminhtml_tax_class_save>
         </events>
     </global>
     <admin>
