@@ -89,12 +89,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
 
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customer = Mage::getSingleton('customer/session')->getCustomer();
-
-            $syncSuccessful = Mage::getModel('taxjar/client_customerSync', $customer)->syncUpdates();
-
-            if ($syncSuccessful) {
-                $order['customer_id'] = $customer->getId();
-            }
+            $order['customer_id'] = $customer->getId();
         }
 
         if ($this->_orderChanged($order)) {

@@ -5,15 +5,15 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
     protected $_customer;
     protected $_logger;
 
+    /**
+     * @param $customer Mage_Customer_Model_Customer
+     */
     public function __construct($customer)
     {
         $this->_customer = $customer;
         $this->_logger = Mage::getModel('taxjar/logger')->setFilename('customers.log');
     }
 
-    /**
-     * @param $customer Mage_Customer_Model_Customer
-     */
     public function syncUpdates()
     {
         // Determine if taxjar touching is necessary
@@ -69,11 +69,10 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
 
             try {
                 $response = $client->request(strtoupper($requestType));
-                $this->_response = $response;
 
                 if (200 <= $response->getStatus() && 300 > $response->getStatus()) {
                     $this->_logger->log('Successful API response: ' . $response->getBody(), 'success');
-//                        Since we are successful we want to set the last sync time to now and save the customer
+                    // Since we are successful we want to set the last sync time to now and save the customer
                     $customer->setTjSalestaxSyncDate(time())->setTjProcessed(true)->save();
                     return true;
                 } else {
@@ -85,7 +84,6 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
             } catch (Zend_Http_Client_Exception $e) {
                 // Catch API timeouts and network issues
                 $this->_logger->log('API timeout or network issue between your store and TaxJar, please try again later.', 'error');
-                $this->_response = null;
             }
 
         }
@@ -107,12 +105,10 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
 
         try {
             $response = $client->request(strtoupper($requestType));
-            $this->_response = $response;
 
             if (200 <= $response->getStatus() && 300 > $response->getStatus()) {
                 $this->_logger->log('Successful API response: ' . $response->getBody(), 'success');
-//                        Since we are successful we want to set the last sync time to now and save the customer
-                $customer->setTjSalestaxSyncDate(time())->setTjProcessed(true)->save();
+                // Since we are successful we want to set the last sync time to now and save the customer
             } else {
                 $errorResponse = json_decode($response->getBody());
                 $this->_logger->log($errorResponse->status . ' ' . $errorResponse->error . ' - ' . $errorResponse->detail, 'error');
@@ -121,7 +117,6 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
         } catch (Zend_Http_Client_Exception $e) {
             // Catch API timeouts and network issues
             $this->_logger->log('API timeout or network issue between your store and TaxJar, please try again later.', 'error');
-            $this->_response = null;
         }
     }
 }
