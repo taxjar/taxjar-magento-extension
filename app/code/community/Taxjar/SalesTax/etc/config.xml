@@ -71,6 +71,38 @@
             </salestax_setup>
         </resources>
         <events>
+            <customer_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerChanged</class>
+                        <method>afterSave</method>
+                    </taxjar>
+                </observers>
+            </customer_save_commit_after>
+            <customer_delete_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerChanged</class>
+                        <method>afterDelete</method>
+                    </taxjar>
+                </observers>
+            </customer_delete_commit_after>
+            <customer_address_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerAddressChanged</class>
+                        <method>afterUpdate</method>
+                    </taxjar>
+                </observers>
+            </customer_address_save_commit_after>
+            <customer_address_delete_commit_after>
+                <type>singleton</type>
+                <class>taxjar/observer_customerAddressChanged</class>
+                <method>afterUpdate</method>
+            </customer_address_delete_commit_after>
             <admin_system_config_changed_section_tax>
                 <observers>
                     <taxjar>

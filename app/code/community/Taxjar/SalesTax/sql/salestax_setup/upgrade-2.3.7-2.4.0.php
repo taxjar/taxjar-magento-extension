@@ -37,8 +37,21 @@ try {
         ));
 
 
+
+    $otherSetup = new Mage_Customer_Model_Resource_Setup('default_setup');
+
+    $otherSetup->startSetup();
+    $otherSetup->addAttribute('customer', 'tj_salestax_sync_date', array(
+        'type' => 'static',
+        'visible'=>false,
+        'default' => false
+    ));
+
+
+
 } catch (Exception $e) {
     Mage::logException($e);
 }
 
 $installer->endSetup();
+$otherSetup->endSetup();

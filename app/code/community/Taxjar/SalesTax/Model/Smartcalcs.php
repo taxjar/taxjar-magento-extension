@@ -87,6 +87,16 @@ class Taxjar_SalesTax_Model_Smartcalcs
             'plugin' => 'magento'
         ));
 
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+
+            $syncSuccessful = Mage::getModel('taxjar/client_customerSync', $customer)->syncUpdates();
+
+            if ($syncSuccessful) {
+                $order['customer_id'] = $customer->getId();
+            }
+        }
+
         if ($this->_orderChanged($order)) {
             $client = new Zend_Http_Client('https://api.taxjar.com/v2/magento/taxes');
             $client->setHeaders('Authorization', 'Bearer ' . $apiKey);
