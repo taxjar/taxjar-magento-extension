@@ -31,7 +31,8 @@ class Taxjar_SalesTax_Model_Observer_TaxClassChanged
         $classId = Mage::app()->getRequest()->getParam('class_id');
         $taxClass = Mage::getModel('tax/class')->load($classId);
         $originalData = Mage::registry('original_tax_class');
-
+        Mage::unregister('original_tax_class'); // Remove from register just in case 
+        
         // On change we need to loop through all the affected customers and sync/resync them
         // First verify that it's a change we care about
         $customers = Mage::getModel('customer/customer')->getCollection()->addFieldToFilter('group_id', $taxClass->getId())->addAttributeToSelect('*');
