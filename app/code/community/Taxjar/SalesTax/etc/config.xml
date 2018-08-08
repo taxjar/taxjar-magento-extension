@@ -163,6 +163,28 @@
             </controller_action_postdispatch_adminhtml_tax_class_save>
         </events>
     </global>
+    <adminhtml>
+        <events>
+            <customer_group_save_before>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerGroupChanged</class>
+                        <method>beforeSave</method>
+                    </taxjar>
+                </observers>
+            </customer_group_save_before>
+            <customer_group_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerGroupChanged</class>
+                        <method>afterSaveCommit</method>
+                    </taxjar>
+                </observers>
+            </customer_group_save_commit_after>
+        </events>
+    </adminhtml>
     <admin>
         <routers>
             <adminhtml>
@@ -187,11 +209,11 @@
         </jobs>
     </crontab>
     <default>
-		<tax>
-			<taxjar>
-				<product_tax_classes>2</product_tax_classes>
-				<customer_tax_classes>3</customer_tax_classes>
-			</taxjar>
-		</tax>
+        <tax>
+            <taxjar>
+                <product_tax_classes>2</product_tax_classes>
+                <customer_tax_classes>3</customer_tax_classes>
+            </taxjar>
+        </tax>
     </default>
 </config>

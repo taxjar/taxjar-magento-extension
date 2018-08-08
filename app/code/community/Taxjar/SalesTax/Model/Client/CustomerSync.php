@@ -17,10 +17,10 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
     public function syncUpdates()
     {
         // Determine if taxjar touching is necessary
-        $customer = $this->_customer;
+        $customer = Mage::getModel('customer/customer')->load($this->_customer->getId());
         // if no sync date or sync date is older than the current time run resync
         if((!$customer->getTjSalestaxSyncDate() or $customer->getTjSalestaxSyncDate() < time()) && !$customer->getTjProcessed()) {
-            if ((is_null($customer->getOrigData()) || !$customer->getTjSalestaxSyncDate())) {
+            if (!$customer->getTjSalestaxSyncDate()) {
                 $requestType = 'post';
                 $url = 'https://api.taxjar.com/v2/customers';
             } else {

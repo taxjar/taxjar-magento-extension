@@ -38,7 +38,9 @@ class Taxjar_SalesTax_Model_Observer_TaxClassChanged
 
             // On change we need to loop through all the affected customers and sync/resync them
             // First verify that it's a change we care about
-            $customers = Mage::getModel('customer/customer')->getCollection()->addFieldToFilter('group_id', $taxClass->getId())->addAttributeToSelect('*');
+
+            $customers = Mage::getModel('customer/customer')->getCollection();
+            $customers->getSelect()->join('customer_group', 'e.group_id = customer_group.customer_group_id', 'tax_class_id')->where('tax_class_id = ?', $classId);
 
             if ('' == $taxClass->getTjSalestaxCode() && '' == $originalData['tj_salestax_code']) {
                 // * No -> No -- Don't sync
