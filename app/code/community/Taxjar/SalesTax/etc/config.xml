@@ -71,24 +71,6 @@
             </salestax_setup>
         </resources>
         <events>
-            <admin_system_config_changed_section_tax>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_configChanged</class>
-                        <method>execute</method>
-                    </taxjar>
-                </observers>
-            </admin_system_config_changed_section_tax>
-            <controller_action_predispatch_adminhtml_system_config_edit>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_configReview</class>
-                        <method>execute</method>
-                    </taxjar>
-                </observers>
-            </controller_action_predispatch_adminhtml_system_config_edit>
             <taxjar_salestax_import_categories>
                 <observers>
                     <taxjar>
@@ -125,6 +107,19 @@
                     </taxjar>
                 </observers>
             </sales_quote_collect_totals_before>
+        </events>
+    </global>
+    <adminhtml>
+        <events>
+            <admin_system_config_changed_section_tax>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_configChanged</class>
+                        <method>execute</method>
+                    </taxjar>
+                </observers>
+            </admin_system_config_changed_section_tax>
             <controller_action_predispatch>
                 <observers>
                     <taxjar>
@@ -134,6 +129,15 @@
                     </taxjar>
                 </observers>
             </controller_action_predispatch>
+            <controller_action_predispatch_adminhtml_system_config_edit>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_configReview</class>
+                        <method>execute</method>
+                    </taxjar>
+                </observers>
+            </controller_action_predispatch_adminhtml_system_config_edit>
             <controller_action_layout_render_before>
                 <observers>
                     <taxjar>
@@ -197,10 +201,6 @@
                     </taxjar>
                 </observers>
             </customer_address_save_commit_after>
-        </events>
-    </global>
-    <adminhtml>
-        <events>
             <customer_group_save_before>
                 <observers>
                     <taxjar>
