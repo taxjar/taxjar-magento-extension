@@ -25,22 +25,22 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
 {
     protected $_customer;
     protected $_logger;
-
+    protected $_processedCustomers = [];
     /**
      * @param $customer Mage_Customer_Model_Customer
      */
-    public function __construct($customer)
+    public function __construct()
     {
-        $this->_customer = $customer;
         $this->_logger = Mage::getModel('taxjar/logger')->setFilename('customers.log');
     }
 
-    public function syncUpdates()
+    public function syncUpdates($customer)
     {
         // Determine if taxjar touching is necessary
+        $this->_customer = $customer;
         $customer = Mage::getModel('customer/customer')->load($this->_customer->getId());
         // if no sync date or sync date is older than the current time run resync
-        if((!$customer->getTjSalestaxSyncDate() or $customer->getTjSalestaxSyncDate() < time()) && !$customer->getTjProcessed()) {
+        if((!$customer->getTjSalestaxSyncDate() or $customer->getTjSalestaxSyncDate() < time()) && !in_array($customer->getId(), $this->_processedCustomers)) {
             if (!$customer->getTjSalestaxSyncDate()) {
                 $requestType = 'post';
                 $url = 'https://api.taxjar.com/v2/customers';
@@ -94,7 +94,8 @@ class Taxjar_SalesTax_Model_Client_CustomerSync
                 if (200 <= $response->getStatus() && 300 > $response->getStatus()) {
                     $this->_logger->log('Successful API response: ' . $response->getBody(), 'success');
                     // Since we are successful we want to set the last sync time to now and save the customer
-                    $customer->setTjSalestaxSyncDate(time())->setTjProcessed(true)->save();
+                    $this->_processedCustomers[] = $customer->getId();
+                    $customer->setTjSalestaxSyncDate(time())->save();
                     return true;
                 } else {
                     $errorResponse = json_decode($response->getBody());

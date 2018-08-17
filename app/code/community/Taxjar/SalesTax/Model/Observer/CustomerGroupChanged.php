@@ -38,7 +38,7 @@ class Taxjar_SalesTax_Model_Observer_CustomerGroupChanged
             @set_time_limit(0);
             @ignore_user_abort(true);
             foreach ($customers as $customer) {
-                Mage::getModel('taxjar/client_customerSync', $customer)->syncUpdates();
+                Mage::getSingleton('taxjar/client_customerSync')->syncUpdates($customer);
             }
         }
     }

@@ -13,16 +13,11 @@
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  */
 
-/**
- * Whenever a Customer Address is changed update the customer in taxjar, this is becuase there may be a change in default
- * shipping address
- * Uses event 
- */
 class Taxjar_SalesTax_Model_Observer_CustomerAddressChanged
 {
     public function afterUpdate(Varien_Event_Observer $observer)
     {
         $customer = $observer->getCustomerAddress()->getCustomer();
-        Mage::getModel('taxjar/client_customerSync', $customer)->syncUpdates();
+        Mage::getSingleton('taxjar/client_customerSync')->syncUpdates($customer);
     }
 }
