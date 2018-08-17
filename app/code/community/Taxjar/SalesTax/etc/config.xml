@@ -107,6 +107,42 @@
                     </taxjar>
                 </observers>
             </sales_quote_collect_totals_before>
+            <customer_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerChanged</class>
+                        <method>afterSave</method>
+                    </taxjar>
+                </observers>
+            </customer_save_commit_after>
+            <customer_delete_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerChanged</class>
+                        <method>afterDelete</method>
+                    </taxjar>
+                </observers>
+            </customer_delete_commit_after>
+            <customer_address_delete_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerAddressChanged</class>
+                        <method>afterUpdate</method>
+                    </taxjar>
+                </observers>
+            </customer_address_delete_commit_after>
+            <customer_address_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerAddressChanged</class>
+                        <method>afterUpdate</method>
+                    </taxjar>
+                </observers>
+            </customer_address_save_commit_after>
         </events>
     </global>
     <adminhtml>
@@ -165,42 +201,6 @@
                     </taxjar>
                 </observers>
             </controller_action_postdispatch_adminhtml_tax_class_save>
-            <customer_save_commit_after>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_CustomerChanged</class>
-                        <method>afterSave</method>
-                    </taxjar>
-                </observers>
-            </customer_save_commit_after>
-            <customer_delete_commit_after>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_CustomerChanged</class>
-                        <method>afterDelete</method>
-                    </taxjar>
-                </observers>
-            </customer_delete_commit_after>
-            <customer_address_delete_commit_after>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_CustomerAddressChanged</class>
-                        <method>afterUpdate</method>
-                    </taxjar>
-                </observers>
-            </customer_address_delete_commit_after>
-            <customer_address_save_commit_after>
-                <observers>
-                    <taxjar>
-                        <type>singleton</type>
-                        <class>taxjar/observer_CustomerAddressChanged</class>
-                        <method>afterUpdate</method>
-                    </taxjar>
-                </observers>
-            </customer_address_save_commit_after>
             <customer_group_save_before>
                 <observers>
                     <taxjar>
