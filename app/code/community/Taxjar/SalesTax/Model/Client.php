@@ -25,11 +25,55 @@ class Taxjar_SalesTax_Model_Client
     protected $_version = 'v2';
     protected $_storeZip;
     protected $_storeRegionCode;
+    protected $_storeRegionId;
 
+    /**
+     * Use website specific shipping origin address if possible,
+     * fallback to global value otherwise.
+     */
     public function __construct()
     {
-        $this->_storeZip = trim(Mage::getStoreConfig('shipping/origin/postcode'));
-        $this->_storeRegionCode = Mage::getModel('directory/region')->load(Mage::getStoreConfig('shipping/origin/region_id'))->getCode();
+        $websiteForShippingOrigin = Mage::getStoreConfig('tax/taxjar/shipping_origin_website');
+        if ($websiteForShippingOrigin) {
+            $this->_storeZip = trim(
+                Mage::app()
+                    ->getWebsite($websiteForShippingOrigin)
+                    ->getConfig('shipping/origin/postcode')
+            );
+            $this->_storeRegionId = Mage::app()
+                ->getWebsite($websiteForShippingOrigin)
+                ->getConfig('shipping/origin/region_id');
+
+        } else {
+            $this->_storeZip = trim(Mage::getStoreConfig('shipping/origin/postcode'));
+            $this->_storeRegionId = Mage::getStoreConfig('shipping/origin/region_id');
+        }
+
+        $this->_storeRegionCode = Mage::getModel('directory/region')->load($this->_storeRegionId)->getCode();
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStoreRegionId()
+    {
+        return $this->_storeRegionId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStoreRegionCode()
+    {
+        return $this->_storeRegionCode;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStoreZip()
+    {
+        return $this->_storeZip;
     }
 
     /**

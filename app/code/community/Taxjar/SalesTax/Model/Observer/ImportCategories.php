@@ -25,7 +25,7 @@ class Taxjar_SalesTax_Model_Observer_ImportCategories
         $this->_apiKey = trim(Mage::getStoreConfig('tax/taxjar/apikey'));
 
         if ($this->_apiKey) {
-            $this->_client = Mage::getModel('taxjar/client');
+            $this->_client = Mage::getSingleton('taxjar/client');
             $this->_importCategories();
         }
     }
