@@ -22,6 +22,8 @@
  */
 class Taxjar_SalesTax_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const DEFAULT_EXEMPTION_TYPE = 'non_exempt';
+
     /**
      * Return the values from a single column in the input array
      * Backport for PHP < 5.5 https://github.com/ramsey/array_column

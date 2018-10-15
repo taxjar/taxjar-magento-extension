@@ -37,7 +37,7 @@ class Taxjar_SalesTax_Block_Adminhtml_Tax_Class_Edit_Form extends Mage_Adminhtml
         }
 
         if ($connected && $this->getClassType() == 'CUSTOMER') {
-            $fieldset->addField(
+            $exemptCheck = $fieldset->addField(
                 'tj_salestax_code', 'select', array(
                     'name'  => 'tj_salestax_code',
                     'label' => Mage::helper('taxjar')->__('TaxJar Exempt'),
@@ -47,6 +47,30 @@ class Taxjar_SalesTax_Block_Adminhtml_Tax_Class_Edit_Form extends Mage_Adminhtml
                         '99999' => 'Yes',
                         '' => 'No'
                     )
+                )
+            );
+
+            $exemptType = $fieldset->addField(
+                'tj_salestax_exempt_type', 'select', array(
+                    'name'  => 'tj_salestax_exempt_type',
+                    'label' => Mage::helper('taxjar')->__('TaxJar Exemption Type'),
+                    'note' => Mage::helper('taxjar')->__('If exempt from TaxJar, select an exemption type for this customer tax class.'),
+                    'value' => $currentClass->getTjSalestaxExemptType(),
+                    'values' => array(
+                        'wholesale' => 'Wholesale',
+                        'government' => 'Government',
+                        'other' => 'Other'
+                    )
+                )
+            );
+
+            $this->setChild('form_after', $this->getLayout()->createBlock('adminhtml/widget_form_element_dependence')
+                ->addFieldMap($exemptCheck->getHtmlId(), $exemptCheck->getName())
+                ->addFieldMap($exemptType->getHtmlId(), $exemptType->getName())
+                ->addFieldDependence(
+                    $exemptType->getName(),
+                    $exemptCheck->getName(),
+                    '99999'
                 )
             );
         }

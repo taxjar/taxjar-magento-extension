@@ -107,6 +107,42 @@
                     </taxjar>
                 </observers>
             </sales_quote_collect_totals_before>
+            <customer_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerChanged</class>
+                        <method>afterSave</method>
+                    </taxjar>
+                </observers>
+            </customer_save_commit_after>
+            <customer_delete_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerChanged</class>
+                        <method>afterDelete</method>
+                    </taxjar>
+                </observers>
+            </customer_delete_commit_after>
+            <customer_address_delete_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerAddressChanged</class>
+                        <method>afterUpdate</method>
+                    </taxjar>
+                </observers>
+            </customer_address_delete_commit_after>
+            <customer_address_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_CustomerAddressChanged</class>
+                        <method>afterUpdate</method>
+                    </taxjar>
+                </observers>
+            </customer_address_save_commit_after>
         </events>
     </global>
     <adminhtml>
@@ -147,6 +183,42 @@
                     </taxjar>
                 </observers>
             </controller_action_layout_render_before>
+            <controller_action_predispatch_adminhtml_tax_class_save>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_taxClassChanged</class>
+                        <method>preDispatch</method>
+                    </taxjar>
+                </observers>
+            </controller_action_predispatch_adminhtml_tax_class_save>
+            <controller_action_postdispatch_adminhtml_tax_class_save>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_taxClassChanged</class>
+                        <method>postDispatch</method>
+                    </taxjar>
+                </observers>
+            </controller_action_postdispatch_adminhtml_tax_class_save>
+            <customer_group_save_before>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerGroupChanged</class>
+                        <method>beforeSave</method>
+                    </taxjar>
+                </observers>
+            </customer_group_save_before>
+            <customer_group_save_commit_after>
+                <observers>
+                    <taxjar>
+                        <type>singleton</type>
+                        <class>taxjar/observer_customerGroupChanged</class>
+                        <method>afterSaveCommit</method>
+                    </taxjar>
+                </observers>
+            </customer_group_save_commit_after>
         </events>
     </adminhtml>
     <admin>
