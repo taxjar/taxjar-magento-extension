@@ -56,9 +56,12 @@ class Taxjar_SalesTax_Model_Transaction_Refund extends Taxjar_SalesTax_Model_Tra
             $this->buildLineItems($order, $creditmemo->getAllItems(), 'refund')
         );
 
-        foreach ($this->request['line_items'] as $lineItem) {
-            $itemDiscounts += $lineItem['discount'];
+        if (isset($this->request['line_items'])) {
+            foreach ($this->request['line_items'] as $lineItem) {
+                $itemDiscounts += $lineItem['discount'];
+            }
         }
+
         if ((abs($discount) - $itemDiscounts) > 0) {
             $shippingDiscount = abs($discount) - $itemDiscounts;
             $this->request['shipping'] = $shipping - $shippingDiscount;
