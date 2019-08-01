@@ -79,6 +79,19 @@
                             <show_in_store>1</show_in_store>
                             <depends><connected>1</connected></depends>
                         </customer_tax_classes>
+                        <shipping_origin_website translate="label">
+                            <label>Shipping Origin Website</label>
+                            <comment>Use shipping origin specified for a chosen website.</comment>
+                            <source_model>taxjar/source_website</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <connected>1</connected>
+                            </depends>
+                        </shipping_origin_website>
                         <debug translate="label">
                             <label>Debug Mode</label>
                             <comment>
@@ -86,7 +99,7 @@
                             </comment>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <frontend_type>select</frontend_type>
-                            <sort_order>10</sort_order>
+                            <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -96,7 +109,7 @@
                             <label>API Token</label>
                             <comment>Your TaxJar API token for sales tax calculations and backup rates.</comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>11</sort_order>
+                            <sort_order>12</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>11</show_in_store>

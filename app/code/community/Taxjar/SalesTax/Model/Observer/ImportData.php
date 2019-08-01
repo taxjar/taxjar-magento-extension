@@ -23,13 +23,13 @@ class Taxjar_SalesTax_Model_Observer_ImportData
     public function execute(Varien_Event_Observer $observer)
     {
         $this->_apiKey = trim(Mage::getStoreConfig('tax/taxjar/apikey'));
-        $storeRegion = Mage::getModel('directory/region')->load(Mage::getStoreConfig('shipping/origin/region_id'));
-        $storeRegionCode = $storeRegion->getCode();
-
         if ($this->_apiKey) {
-            $this->_client = Mage::getModel('taxjar/client');
+            $this->_client = Mage::getSingleton('taxjar/client');
+            $storeRegion = Mage::getModel('directory/region')
+                ->load($this->_client->getStoreRegionId());
+            $storeRegionCode = $storeRegion->getCode();
 
-            if (isset($storeRegionCode) && $storeRegion->getCountryId() == 'US') {
+            if (isset($storeRegionCode) && $storeRegion->getCountryId() === 'US') {
                 $this->_setConfiguration();
             }
         }
