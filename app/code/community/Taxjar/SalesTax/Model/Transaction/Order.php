@@ -129,6 +129,10 @@ class Taxjar_SalesTax_Model_Transaction_Order extends Taxjar_SalesTax_Model_Tran
             return false;
         }
 
+        if(!Mage::getStoreConfig('tax/taxjar/transactions',$order->getStore()->getId())) {
+            return false;
+        }
+
         // USD currency orders for reporting only
         if ($order->getOrderCurrencyCode() != 'USD') {
             return false;
