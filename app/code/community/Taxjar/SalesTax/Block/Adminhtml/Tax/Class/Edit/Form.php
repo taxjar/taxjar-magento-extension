@@ -31,7 +31,7 @@ class Taxjar_SalesTax_Block_Adminhtml_Tax_Class_Edit_Form extends Mage_Adminhtml
                     'name'  => 'tj_salestax_code',
                     'label' => Mage::helper('taxjar')->__('TaxJar Category'),
                     'value' => $currentClass->getTjSalestaxCode(),
-                    'values' => Mage::getModel('taxjar/categories')->toOptionArray()
+                    'values' => Mage::getModel('taxjar/tax_category')->getCollection()->toOptionArray()
                 )
             );
         }

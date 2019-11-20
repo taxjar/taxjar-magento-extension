@@ -19,7 +19,7 @@
 <config>
     <modules>
         <Taxjar_SalesTax>
-            <version>3.0.0</version>
+            <version>3.0.1</version>
         </Taxjar_SalesTax>
     </modules>
     <global>
@@ -50,6 +50,9 @@
                     <tax_nexus>
                         <table>tax_nexus</table>
                     </tax_nexus>
+                    <tax_category>
+                        <table>tj_product_tax_categories</table>
+                    </tax_category>
                 </entities>
             </taxjar_resource>
             <sales>

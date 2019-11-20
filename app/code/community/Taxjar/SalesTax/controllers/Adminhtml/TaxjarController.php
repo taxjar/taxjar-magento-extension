@@ -57,6 +57,7 @@ class Taxjar_SalesTax_Adminhtml_TaxjarController extends Mage_Adminhtml_Controll
         Mage::getConfig()->reinit();
 
         $this->_purgeNexusAddresses();
+        $this->_purgeProductTaxCategories();
 
         Mage::getSingleton('core/session')->addSuccess(Mage::helper('taxjar')->__('Your TaxJar account has been disconnected.'));
         Mage::dispatchEvent('taxjar_salestax_import_rates');
@@ -86,6 +87,18 @@ class Taxjar_SalesTax_Adminhtml_TaxjarController extends Mage_Adminhtml_Controll
         $nexusAddresses = Mage::getModel('taxjar/tax_nexus')->getCollection();
         foreach($nexusAddresses as $nexusAddress) {
             $nexusAddress->delete();
+        }
+    }
+
+    /**
+     * Purge nexus addresses on disconnect
+     */
+    private function _purgeProductTaxCategories()
+    {
+        $productTaxCategories = Mage::getModel('taxjar/tax_category')->getCollection();
+
+        foreach($productTaxCategories as $productTaxCategory) {
+            $productTaxCategory->delete();
         }
     }
 

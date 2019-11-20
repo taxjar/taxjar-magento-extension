@@ -15,37 +15,38 @@
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  */
 
-/**
- * TaxJar Categories Model
- * Populates tax category dropdown under
-*/
-class Taxjar_SalesTax_Model_Categories
+class Taxjar_SalesTax_Model_Resource_Tax_Category_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     /**
-     * Populate dropdown options
+     * Resource initialization
+     */
+    public function _construct()
+    {
+        $this->_init('taxjar/tax_category');
+    }
+
+    /**
+     * Retrieve option array
      *
-     * @param void
      * @return array
      */
     public function toOptionArray()
     {
-        $categories = json_decode(Mage::getStoreConfig('tax/taxjar/categories'), true);
-        $categories = Mage::helper('taxjar')->array_sort($categories, 'product_tax_code', SORT_ASC);
-
-        $output = array(
+        $options = array(
             array(
                 'label' => 'Fully Taxable',
                 'value' => ''
             )
         );
 
-        foreach($categories as $category) {
-            $output[] = array(
-                'label' => $category['name'] . ' (' . $category['product_tax_code'] . ')',
-                'value' => $category['product_tax_code']
+        foreach ($this as $category) {
+            $options[] = array(
+                'label' => $category->getName() . ' (' . $category->getProductTaxCode() . ')' .
+                    ($category->getPlusOnly() ? ' *(PLUS ONLY)*' : ''),
+                'value' => $category->getProductTaxCode()
             );
         }
 
-        return $output;
+        return $options;
     }
 }

@@ -34,7 +34,7 @@ class Taxjar_SalesTax_Model_Observer_ImportCategories
      * Get TaxJar product categories
      *
      * @param void
-     * @return string
+     * @return array
      */
     private function _getCategoryJson()
     {
@@ -51,7 +51,18 @@ class Taxjar_SalesTax_Model_Observer_ImportCategories
     private function _importCategories()
     {
         $categoryJson = $this->_getCategoryJson();
-        Mage::getConfig()->saveConfig('tax/taxjar/categories', json_encode($categoryJson));
-        Mage::getConfig()->reinit();
+
+        foreach ($categoryJson as $json) {
+            $category = Mage::getModel('taxjar/tax_category')->load(trim($json['product_tax_code']),
+                'product_tax_code');
+            $plusOnly = (strpos(trim($json['description']), '*(PLUS ONLY)*') !== false) ? true : false;
+
+            $category->setProductTaxCode(trim($json['product_tax_code']));
+            $category->setName(trim($json['name']));
+            $category->setDescription(trim($json['description']));
+            $category->setPlusOnly($plusOnly);
+
+            $category->save();
+        }
     }
 }
