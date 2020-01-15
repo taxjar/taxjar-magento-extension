@@ -91,7 +91,7 @@ class Taxjar_SalesTax_Adminhtml_TaxjarController extends Mage_Adminhtml_Controll
     }
 
     /**
-     * Purge nexus addresses on disconnect
+     * Purge product tax categories on disconnect
      */
     private function _purgeProductTaxCategories()
     {
