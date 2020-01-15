@@ -32,6 +32,7 @@ class Taxjar_SalesTax_Model_Resource_Tax_Category_Collection extends Mage_Core_M
      */
     public function toOptionArray()
     {
+        $labels = array();
         $options = array(
             array(
                 'label' => 'Fully Taxable',
@@ -47,7 +48,10 @@ class Taxjar_SalesTax_Model_Resource_Tax_Category_Collection extends Mage_Core_M
             );
         }
 
-        $labels = array_column($options, 'label');
+        foreach($options as $option) {
+            $labels[] = $option['label'];
+        }
+
         array_multisort($labels, SORT_ASC, $options);
 
         return $options;
