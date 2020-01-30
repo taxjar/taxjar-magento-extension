@@ -48,7 +48,7 @@ class Taxjar_SalesTax_Model_Transaction_Refund extends Taxjar_SalesTax_Model_Tra
             'amount' => $subtotal + $shipping - abs($discount) + $adjustment,
             'shipping' => $shipping,
             'sales_tax' => $salesTax,
-            'provider' => $this->getProvider()
+            'provider' => $this->getProvider($order)
         );
 
         foreach ($creditmemo->getAllItems() as $item) {

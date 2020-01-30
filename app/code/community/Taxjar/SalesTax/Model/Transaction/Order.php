@@ -47,7 +47,7 @@ class Taxjar_SalesTax_Model_Transaction_Order extends Taxjar_SalesTax_Model_Tran
             'amount' => $subtotal + $shipping - abs($discount),
             'shipping' => $shipping - abs($shippingDiscount),
             'sales_tax' => $salesTax,
-            'provider' => $this->getProvider()
+            'provider' => $this->getProvider($order)
         );
 
         $this->request = array_merge(

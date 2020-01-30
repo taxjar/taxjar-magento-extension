@@ -237,7 +237,7 @@ class Taxjar_SalesTax_Model_Transaction
      *
      * @return string
      */
-    protected function getProvider() {
+    protected function getProvider($order) {
         $provider = Mage::getStoreConfig('tax/taxjar/provider');
 
         if (is_null($provider)) {
@@ -267,6 +267,19 @@ class Taxjar_SalesTax_Model_Transaction
 
             Mage::getConfig()->saveConfig('tax/taxjar/provider', $provider);
             Mage::app()->cleanCache();
+        }
+
+        if (class_exists('Ess_M2ePro_Model_Order')) {
+            try {
+                /** @var Ess_M2ePro_Model_Order $m2eOrder */
+                $m2eOrder = Mage::getModel('M2ePro/Order')->load($order->getId(), 'magento_order_id');
+
+                if (in_array($m2eOrder->getComponentMode(), ['amazon', 'ebay', 'walmart'])) {
+                    $provider = $m2eOrder->getComponentMode();
+                }
+            } catch (Ess_M2ePro_Model_Exception $e) {
+                // noop: M2e order does not exist or component mode can't be loaded
+            }
         }
 
         return $provider;
