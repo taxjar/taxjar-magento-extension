@@ -234,7 +234,7 @@ class Taxjar_SalesTax_Model_Transaction
 
     /**
      * Get the default provider parameter
-     * 
+     *
      * @param Mage_Sales_Model_Order $order
      * @return mixed|string
      */
@@ -275,7 +275,7 @@ class Taxjar_SalesTax_Model_Transaction
                 /** @var Ess_M2ePro_Model_Order $m2eOrder */
                 $m2eOrder = Mage::getModel('M2ePro/Order')->load($order->getId(), 'magento_order_id');
 
-                if (in_array($m2eOrder->getComponentMode(), ['amazon', 'ebay', 'walmart'])) {
+                if (in_array($m2eOrder->getComponentMode(), array('amazon', 'ebay', 'walmart'))) {
                     $provider = $m2eOrder->getComponentMode();
                 }
             } catch (Ess_M2ePro_Model_Exception $e) {
