@@ -234,8 +234,9 @@ class Taxjar_SalesTax_Model_Transaction
 
     /**
      * Get the default provider parameter
-     *
-     * @return string
+     * 
+     * @param Mage_Sales_Model_Order $order
+     * @return mixed|string
      */
     protected function getProvider($order) {
         $provider = Mage::getStoreConfig('tax/taxjar/provider');
