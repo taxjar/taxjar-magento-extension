@@ -89,6 +89,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
 
         if ($this->_orderChanged($order)) {
             $client = new Zend_Http_Client('https://api.taxjar.com/v2/magento/taxes');
+            $client->setConfig(array('useragent' => Mage::helper('taxjar')->getUserAgent()));
             $client->setHeaders('Authorization', 'Bearer ' . $apiKey);
             $client->setRawData(json_encode($order), 'application/json');
 

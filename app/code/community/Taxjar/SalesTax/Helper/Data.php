@@ -149,4 +149,32 @@ class Taxjar_SalesTax_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $new_array;
     }
+
+    /**
+     * Return the current version of the Taxjar_SalesTax extension
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return (string) Mage::getConfig()->getNode()->modules->Taxjar_SalesTax->version;
+    }
+
+    /**
+     * Return a custom user agent string
+     *
+     * @return string
+     */
+    public function getUserAgent()
+    {
+        $os = php_uname('a');
+        $php = 'PHP ' . PHP_VERSION;
+        $curl = curl_version();
+        $curl = 'cURL ' . $curl['version'];
+        $openSSL = OPENSSL_VERSION_TEXT;
+        $magento = 'Magento ' . Mage::getEdition() . ' ' . Mage::getVersion();
+        $taxjar = 'Taxjar_SalesTax/' . $this->getVersion();
+
+        return "TaxJar/Magento ($os; $php; $curl; $openSSL; $magento) $taxjar";
+    }
 }
