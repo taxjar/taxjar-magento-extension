@@ -157,7 +157,7 @@ class Taxjar_SalesTax_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getVersion()
     {
-        return (string) Mage::getConfig()->getNode()->modules->Taxjar_SalesTax->version;
+        return Mage::getConfig()->getNode('modules/Taxjar_SalesTax/version');
     }
 
     /**
