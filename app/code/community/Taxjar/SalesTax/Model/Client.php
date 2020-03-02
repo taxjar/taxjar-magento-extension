@@ -109,8 +109,14 @@ class Taxjar_SalesTax_Model_Client
     {
         $client = new Zend_Http_Client($url, array('timeout' => 30));
         $client->setMethod($method);
-        $client->setConfig(array('useragent' => Mage::helper('taxjar')->getUserAgent()));
-        $client->setHeaders('Authorization', 'Bearer ' . $this->_apiKey);
+        $client->setConfig(array(
+            'useragent' => Mage::helper('taxjar')->getUserAgent(),
+            'referer' => Mage::getBaseUrl()
+        ));
+        $client->setHeaders(array(
+            'Authorization' => 'Bearer ' . $this->_apiKey,
+            'Referer' => Mage::getBaseUrl()
+        ));
 
         return $client;
     }
