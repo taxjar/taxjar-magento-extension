@@ -42,8 +42,7 @@ class Taxjar_SalesTax_Model_Resource_Tax_Category_Collection extends Mage_Core_M
 
         foreach ($this as $category) {
             $options[] = array(
-                'label' => $category->getName() . ' (' . $category->getProductTaxCode() . ')' .
-                    ($category->getPlusOnly() ? ' *(PLUS ONLY)*' : ''),
+                'label' => $category->getName() . ' (' . $category->getProductTaxCode() . ')',
                 'value' => $category->getProductTaxCode()
             );
         }
