@@ -26,6 +26,7 @@ class Taxjar_SalesTax_Model_Client
     protected $_apiKey;
     protected $_storeZip;
     protected $_storeRegionCode;
+    protected $_showResponseErrors;
 
     public function __construct()
     {
@@ -100,6 +101,16 @@ class Taxjar_SalesTax_Model_Client
     }
 
     /**
+     * Toggle hiding api response errors
+     * @param bool $toggle
+     * @return void
+     */
+    public function showResponseErrors($toggle)
+    {
+        $this->_showResponseErrors = $toggle;
+    }
+
+    /**
      * Get HTTP Client
      *
      * @param string $url
@@ -137,7 +148,7 @@ class Taxjar_SalesTax_Model_Client
                 $json = $response->getBody();
                 return json_decode($json, true);
             } else {
-                $this->_handleError($errors, $response->getStatus());
+                $this->_handleError($errors, $response);
             }
         } catch (Zend_Http_Client_Exception $e) {
             Mage::throwException(Mage::helper('taxjar')->__('Could not connect to TaxJar.'));
@@ -185,17 +196,21 @@ class Taxjar_SalesTax_Model_Client
      * Handle API errors and throw exception
      *
      * @param array $customErrors
-     * @param string $statusCode
+     * @param Zend_Http_Response $response
      * @return string
      */
-    private function _handleError($customErrors, $statusCode)
+    private function _handleError($customErrors, $response)
     {
         $errors = $this->_defaultErrors() + $customErrors;
+        $statusCode = (int) $response->getStatus();
 
-        if (isset($errors[$statusCode])) {
-            Mage::throwException($errors[$statusCode]);
+        if ($this->_showResponseErrors) {
+            $msg = json_decode($response->getBody(), true);
+            throw new Mage_Api2_Exception($msg['detail'], $statusCode);
+        } elseif (isset($errors[$statusCode])) {
+            throw new Mage_Api2_Exception($errors[$statusCode], $statusCode);
         } else {
-            Mage::throwException($errors['default']);
+            throw new Mage_Api2_Exception($errors['default'], $statusCode);
         }
     }
 

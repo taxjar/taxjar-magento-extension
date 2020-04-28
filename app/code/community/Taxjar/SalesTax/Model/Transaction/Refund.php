@@ -122,7 +122,7 @@ class Taxjar_SalesTax_Model_Transaction_Refund extends Taxjar_SalesTax_Model_Tra
         } catch (Exception $e) {
             $this->logger->log('Error: ' . $e->getMessage(), 'error');
 
-            $errorStatusCode = array_search($e->getMessage(), $this->transactionErrors());
+            $errorStatusCode = $e->getCode();
 
             // Retry push for not found records using POST
             if (!$forceMethod && $method == 'PUT' && $errorStatusCode == 404) {

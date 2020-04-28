@@ -101,7 +101,7 @@ class Taxjar_SalesTax_Model_Transaction_Order extends Taxjar_SalesTax_Model_Tran
         } catch (Exception $e) {
             $this->logger->log('Error: ' . $e->getMessage(), 'error');
 
-            $errorStatusCode = array_search($e->getMessage(), $this->transactionErrors());
+            $errorStatusCode = $e->getCode();
 
             // Retry push for not found records using POST
             if (!$forceMethod && $method == 'PUT' && $errorStatusCode == 404) {
