@@ -99,9 +99,8 @@ class Taxjar_SalesTax_Model_Transaction_Order extends Taxjar_SalesTax_Model_Tran
 
             $this->originalOrder->setTjSalestaxSyncDate(gmdate('Y-m-d H:i:s'))->save();
         } catch (Exception $e) {
-            $this->logger->log('Error: ' . $e->getMessage(), 'error');
-
             $errorStatusCode = $e->getCode();
+            $this->logger->log($errorStatusCode . ' Error: ' . $e->getMessage(), 'error');
 
             // Retry push for not found records using POST
             if (!$forceMethod && $method == 'PUT' && $errorStatusCode == 404) {
