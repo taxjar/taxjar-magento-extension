@@ -203,9 +203,9 @@ class Taxjar_SalesTax_Model_Client
     {
         $errors = $this->_defaultErrors() + $customErrors;
         $statusCode = (int) $response->getStatus();
+        $msg = json_decode($response->getBody(), true);
 
-        if ($this->_showResponseErrors) {
-            $msg = json_decode($response->getBody(), true);
+        if ($this->_showResponseErrors && is_array($msg) && isset($msg['detail'])) {
             throw new Mage_Api2_Exception($msg['detail'], $statusCode);
         } elseif (isset($errors[$statusCode])) {
             throw new Mage_Api2_Exception($errors[$statusCode], $statusCode);
