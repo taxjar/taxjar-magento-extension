@@ -41,7 +41,7 @@ class Taxjar_SalesTax_Block_Adminhtml_Tax_Class_Edit_Form extends Mage_Adminhtml
                 'tj_salestax_code', 'select', array(
                     'name'  => 'tj_salestax_code',
                     'label' => Mage::helper('taxjar')->__('TaxJar Exempt'),
-                    'note' => Mage::helper('taxjar')->__('Fully exempts customer groups associated with this tax class from sales tax calculations through SmartCalcs. This setting does not apply to product exemptions or backup rates.'),
+                    'note' => Mage::helper('taxjar')->__('Fully exempts customer groups associated with this tax class from sales tax calculations through the TaxJar API. This setting does not apply to product exemptions or backup rates.'),
                     'value' => $currentClass->getTjSalestaxCode(),
                     'values' => array(
                         '99999' => 'Yes',

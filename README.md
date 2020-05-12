@@ -15,7 +15,7 @@ Now comes the really fun part. Install our extension one of four ways:
 - Manually upload the `/app` files to your server.
 - Use [magento-composer-installer](https://github.com/Cotya/magento-composer-installer) to install via [Composer](https://getcomposer.org).
 
-From there it's smooth sailing. Simply paste in your API token, click **Save Config** and we'll import zip-based rates for states where you have nexus. If you'd like more accurate rates that go beyond the zip code, enable SmartCalcs for live checkout calculations.
+From there it's smooth sailing. Simply paste in your API token, click **Save Config** and we'll import zip-based rates for states where you have nexus. If you'd like more accurate rates that go beyond the zip code, enable the TaxJar API for live checkout calculations.
 
 ## Development
 
