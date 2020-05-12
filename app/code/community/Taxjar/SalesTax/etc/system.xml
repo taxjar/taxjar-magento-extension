@@ -21,7 +21,7 @@
         <tax>
             <groups>
                 <taxjar translate="label" module="taxjar">
-                    <label>TaxJar API</label>
+                    <label>TaxJar Sales Tax Automation</label>
                     <sort_order>0</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>

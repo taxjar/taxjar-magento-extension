@@ -59,10 +59,10 @@ class Taxjar_SalesTax_Model_Comment
         <p><button type='button' class='scalable' onclick='window.open("https://app.taxjar.com/account", "_blank")'><span>Manage Account</span></button>&nbsp;&nbsp;or&nbsp;&nbsp;<a href='#' onclick='if (window.confirm("Are you sure you want to disconnect from TaxJar? This will remove all TaxJar rates from your Magento store. If you have a paid TaxJar subscription, manage your account at https://app.taxjar.com.")) window.location="{$disconnectUrl}"; return false'>Disconnect TaxJar</a></p><br/>
 EOT;
         $htmlString .= "<p class='note'><span>Getting Started</span></p><p></p>";
-        $htmlString .= "<p><a href='" . Mage::helper('adminhtml')->getUrl('adminhtml/tax_nexus/index') . "'>Nexus Addresses</a><br/><span style='font-size: 0.9em'>Before enabling the TaxJar API, set up your nexus addresses so TaxJar knows where to collect sales tax.</span></p>";
+        $htmlString .= "<p><a href='" . Mage::helper('adminhtml')->getUrl('adminhtml/tax_nexus/index') . "'>Nexus Addresses</a><br/><span style='font-size: 0.9em'>Before enabling TaxJar for calculations, set up your nexus addresses so TaxJar knows where to collect sales tax.</span></p>";
         $htmlString .= "<p><a href='" . Mage::helper('adminhtml')->getUrl('adminhtml/tax_class_product/index') . "'>Product Tax Classes</a><br/><span style='font-size: 0.9em'>If some of your products are tax-exempt, assign a TaxJar category tax code for new or existing product tax classes.</span></p>";
         $htmlString .= "<p><a href='http://www.taxjar.com/guides/integrations/magento/' target='_blank'>Extension User Guide</a><br/><span style='font-size: 0.9em'>Read our comprehensive Magento guide on how to configure your store properly for sales tax calculations and reporting.</span></p>";
-        $htmlString .= "<p><a href='http://www.taxjar.com/contact/' target='_blank'>Help & Support</a><br/><span style='font-size: 0.9em'>Need help setting up the TaxJar API? Get in touch with our Magento sales tax experts.</span></p><br/>";
+        $htmlString .= "<p><a href='http://www.taxjar.com/contact/' target='_blank'>Help & Support</a><br/><span style='font-size: 0.9em'>Need help setting up TaxJar? Get in touch with our Magento sales tax experts.</span></p><br/>";
         $htmlString .= <<<EOT
         <p><button type='button' class='scalable' onclick='window.open("https://app.taxjar.com", "_blank")'><span>View Sales Tax Reports</span></button></p>
 EOT;
