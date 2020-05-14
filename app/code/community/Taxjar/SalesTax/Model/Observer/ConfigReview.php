@@ -15,7 +15,7 @@
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  */
 
-class TaxJar_SalesTax_Model_Observer_ConfigReview
+class Taxjar_SalesTax_Model_Observer_ConfigReview
 {
     public function execute(Varien_Event_Observer $observer)
     {

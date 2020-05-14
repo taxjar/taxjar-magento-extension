@@ -15,7 +15,7 @@
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  */
 
-class TaxJar_SalesTax_Model_Observer_AdminNotifications extends Mage_AdminNotification_Model_Feed
+class Taxjar_SalesTax_Model_Observer_AdminNotifications extends Mage_AdminNotification_Model_Feed
 {
     public function getFeedUrl()
     {
