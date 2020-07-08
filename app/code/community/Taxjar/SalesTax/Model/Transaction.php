@@ -57,7 +57,7 @@ class Taxjar_SalesTax_Model_Transaction
         $fromPostcode = Mage::getStoreConfig('shipping/origin/postcode', $storeId);
         $fromState = Mage::getModel('directory/region')->load(Mage::getStoreConfig('shipping/origin/region_id', $storeId))->getCode();
         $fromCity = Mage::getStoreConfig('shipping/origin/city', $storeId);
-        $fromStreet = Mage::getStoreConfig('shipping/origin/street_line1', $storeId) . Mage::getStoreConfig('shipping/origin/street_line2', $storeId);
+        $fromStreet = Mage::getStoreConfig('shipping/origin/street_line1', $storeId);
 
         return array(
             'from_country' => $fromCountry,
@@ -86,7 +86,7 @@ class Taxjar_SalesTax_Model_Transaction
             'to_zip' => $address->getPostcode(),
             'to_state' => $address->getRegionCode(),
             'to_city' => $address->getCity(),
-            'to_street' => $address->getData('street')
+            'to_street' => $address->getStreet(1)
         );
 
         return $toAddress;

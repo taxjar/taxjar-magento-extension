@@ -33,7 +33,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
     /**
      * Tax calculation for order
      *
-     * @param  object $address
+     * @param  Mage_Sales_Model_Quote_Address $address
      * @return void
      */
     public function initTaxForOrder($address)
@@ -74,7 +74,7 @@ class Taxjar_SalesTax_Model_Smartcalcs
             'to_zip' => $address->getPostcode(),
             'to_state' => $address->getRegionCode(),
             'to_city' => $address->getCity(),
-            'to_street' => $address->getData('street'),
+            'to_street' => $address->getStreet(1)
         );
 
         $shipping = (float) $address->getShippingAmount();
