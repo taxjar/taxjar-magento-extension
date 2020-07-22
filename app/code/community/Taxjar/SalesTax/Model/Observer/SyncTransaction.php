@@ -21,13 +21,8 @@ class Taxjar_SalesTax_Model_Observer_SyncTransaction
      * @param Varien_Event_Observer $observer
      * @return $this
      */
-    public function execute(Varien_Event_Observer $observer) {
-        $syncEnabled = Mage::getStoreConfig('tax/taxjar/transactions');
-
-        if (!$syncEnabled) {
-            return $this;
-        }
-
+    public function execute(Varien_Event_Observer $observer)
+    {
         if (!Mage::registry('taxjar_sync')) {
             Mage::register('taxjar_sync', true);
         } else {

@@ -29,7 +29,8 @@ class Taxjar_SalesTax_Model_Transaction_Comment
      */
     public function getCommentText()
     {
-        $isEnabled = Mage::getStoreConfig('tax/taxjar/transactions');
+        $storeId = Mage::app()->getStore(Mage::app()->getRequest()->getParam('store'))->getId();
+        $isEnabled = Mage::getStoreConfig('tax/taxjar/transactions', $storeId);
         $htmlString = "<p class='note'><span>Sync orders and refunds with TaxJar for automated sales tax reporting and filing. Complete and closed transactions sync automatically on update.</span></p><br/>";
 
         if ($isEnabled) {

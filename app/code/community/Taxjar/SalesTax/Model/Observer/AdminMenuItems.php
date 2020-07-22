@@ -19,8 +19,9 @@ class Taxjar_SalesTax_Model_Observer_AdminMenuItems
 {
     public function execute(Varien_Event_Observer $observer)
     {
-        $connected = Mage::getStoreConfig('tax/taxjar/connected');
-        $transactionSync = Mage::getStoreConfig('tax/taxjar/transactions');
+        $storeId = Mage::app()->getStore(Mage::app()->getRequest()->getParam('store'))->getId();
+        $connected = Mage::getStoreConfig('tax/taxjar/connected', $storeId);
+        $transactionSync = Mage::getStoreConfig('tax/taxjar/transactions', $storeId);
 
         if (!$connected) {
             $config = Mage::getSingleton('admin/config')->getAdminhtmlConfig()->getNode();

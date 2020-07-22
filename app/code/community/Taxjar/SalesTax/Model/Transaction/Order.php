@@ -124,6 +124,11 @@ class Taxjar_SalesTax_Model_Transaction_Order extends Taxjar_SalesTax_Model_Tran
      */
     public function isSyncable($order) {
         $states = array('complete', 'closed');
+        $syncEnabled = Mage::getStoreConfig('tax/taxjar/transactions', $order->getStore()->getId());
+
+        if (!$syncEnabled) {
+            return false;
+        }
 
         if (!in_array($order->getState(), $states)) {
             return false;

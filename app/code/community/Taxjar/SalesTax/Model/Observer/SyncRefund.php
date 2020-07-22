@@ -23,23 +23,15 @@ class Taxjar_SalesTax_Model_Observer_SyncRefund
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        $syncEnabled = Mage::getStoreConfig('tax/taxjar/transactions');
-
-        if (!$syncEnabled) {
-            return $this;
-        }
-
         if (!Mage::registry('taxjar_sync_refund')) {
             Mage::register('taxjar_sync_refund', true);
         } else {
             return $this;
-
         }
 
         /** @var Mage_Sales_Model_Order_Creditmemo $creditmemo */
         $creditmemo = $observer->getCreditmemo();
         $order = $creditmemo->getOrder();
-
         $orderTransaction = Mage::getModel('taxjar/transaction_order');
 
         if ($orderTransaction->isSyncable($order)) {
